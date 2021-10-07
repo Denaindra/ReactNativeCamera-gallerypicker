@@ -1,21 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { Button, StyleSheet, View } from "react-native";
+import CameraScreen from "./Screens/CameraScreen";
+import ImageGalleryScreen from "./Screens/ImageGalleryScreen";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  let containScreen;
+  const [pageName, setPageName] = useState("");
+
+  if (pageName === "CameraPage") {
+    containScreen = <CameraScreen />;
+  } else if (pageName === "GalleryPage") {
+    containScreen = <ImageGalleryScreen />;
+  } else {
+    containScreen = (
+      <View style={styles.container}>
+        <Button title="Camera" onPress={() => LoadPage("CameraPage")} />
+        <Button title="Image gallery" onPress={() => LoadPage("GalleryPage")} />
+      </View>
+    );
+  }
+
+  LoadPage = (pagename) => {
+    if (pagename === "CameraPage") {
+      setPageName("CameraPage");
+    } else {
+      setPageName("GalleryPage");
+    }
+  };
+
+  
+  return containScreen;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "space-around",
+    alignItems: "center",
+    flexDirection: "row",
   },
 });
